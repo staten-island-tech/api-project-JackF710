@@ -7,7 +7,7 @@ async function getData() {
   //return.promise
   try {
     const response = await fetch(
-      api - football - standings.azharimm.site / leagues
+      [GET] - "4cacf8dfa0msh10883fde64ea546p13b9dfjsn202b29d5d5e0"
     );
     //guard clause
     if (response.status != 200) {

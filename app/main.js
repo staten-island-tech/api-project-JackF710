@@ -3,7 +3,7 @@ import "./style.css";
 async function getData() {
   try {
     const response = await fetch(
-      "https://api-football-standings.azharimm.site/leagues"
+      "https://api-football-standings.azharimm.site"
     );
     if (response.status != 200) {
       throw new Error(response);

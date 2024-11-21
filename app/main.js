@@ -1,20 +1,14 @@
 import "./style.css";
 
 async function getData() {
-  try {
-    const response = await fetch(
-      "https://api-football-standings.azharimm.site"
-    );
-    if (response.status != 200) {
-      throw new Error(response);
-    } else {
-      const data = await response.json();
-      console.log(data.data);
-      data.data.forEach((league) => console.log(league.name));
-    }
-  } catch (error) {
-    alert("I could not find that boi!");
-  }
+  const response = await fetch(
+    "https://api.football-data.org/v4/competitions/"
+  );
+
+  const data = await response.json();
+  console.log(data.data);
+
+  presentLeagues(data);
 }
 
-getData();
+function presentLeagues(data) {}

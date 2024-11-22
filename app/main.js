@@ -1,6 +1,6 @@
 import "./style.css";
 
-async function getCompetitions() {
+async function getCompetitions(data) {
   const response = await fetch(
     "https://api.football-data.org/v4/competitions/"
   );
@@ -13,18 +13,18 @@ async function getCompetitions() {
 }
 
 function presentCompetitions(data) {
-  const competitionsListContainer = document.querySelector("#league-cont");
+  const competitionsListContainer = document.querySelector("#competition-cont");
   competitionsListContainer.innerHTML = "";
   data.data.forEach((competition) => {
     const competitionHTML = `
-    <div class= "league-name">
+    <div class= "competition-name">
     <h2>${competition.name}</h2>
-    <img>${competition.flag}<img>
-    <p>${competition.type}</p>
-    <p>${competition.startDate}</p>
-    <p>${competition.endDate}</p>
-    <p>${competition.currentMatchday}</p>
-    <p>${competition.winner}</p>
+    <img src="${competition.flag}" />
+    <p> Competition Type:${competition.type}</p>
+    <p>Competition Start:${competition.startDate}</p>
+    <p>Competition End:${competition.endDate}</p>
+    <p>Competition Matchday:${competition.currentMatchday}</p>
+    <p>Competition Winner:${competition.winner}</p>
     </div>
     `;
     competitionsListContainer.insertAdjacentHTML("beforeend", competitionHTML);

@@ -1,6 +1,6 @@
 import "./style.css";
 
-async function getCompetitions(data) {
+async function getCompetitions() {
   const response = await fetch(
     "https://api.football-data.org/v4/competitions/"
   );
@@ -17,7 +17,7 @@ function presentCompetitions(data) {
   competitionsListContainer.innerHTML = "";
   data.data.forEach((competition) => {
     const competitionHTML = `
-    <div class= "competition-name">
+    <div class= "competition-cont">
     <h2>${competition.name}</h2>
     <img src="${competition.flag}" />
     <p> Competition Type:${competition.type}</p>

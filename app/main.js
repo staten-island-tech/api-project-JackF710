@@ -1,23 +1,42 @@
-module.exports = {
-  content: [
-    "./index.html",
-    "./main.js", // Include your JS file here
-    "./app/**/*.html", // Adjust the path based on your project structure
-    "./app/**/*.js", // Adjust the path for your JavaScript files
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
-
+import "./style.css";
 
 async function getMeals() {
-  const response = await fetch(
-    "https://www.themealdb.com/api/json/v1/1/search.php?f=a"
-  );
-  console.log(response.status);
+  const response = await fetch
+    const urls = [
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=a",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=b",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=c",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=d",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=e",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=f",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=g",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=h",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=i",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=j",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=k",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=l",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=m",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=n",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=o",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=p",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=q",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=r",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=s",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=t",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=u",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=v",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=w",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=x",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=y",
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=z",
+    ];
 
+    const responses = await Promise.all(urls.map((url) => fetch(url)));
+    const mealsData = await Promise.all(responses.map((response) => response.json()));
+  
+    const allMeals = mealsData.flatMap((data) => data.meals || []);
+  
+    presentMeals(allMeals);
   const data = await response.json();
   presentMeals(data.meals);
 }
@@ -25,16 +44,17 @@ async function getMeals() {
 function presentMeals(data) {
   const mealsListContainer = document.querySelector("#meal-cont");
   mealsListContainer.innerHTML = "";
+
   data.forEach((meal) => {
     const mealHTML = `
-    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6 max-w-sm mx-auto hover:shadow-xl transition-shadow">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">${meal.strMeal}</h2>
-      <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="w-full h-40 object-cover rounded-lg mb-4" />
-      <p class="text-gray-600 dark:text-gray-300 text-sm"><strong>Food Category:</strong> ${meal.strCategory}</p>
-      <p class="text-gray-600 dark:text-gray-300 text-sm"><strong>Food Country:</strong> ${meal.strArea}</p>
-      <p class="text-gray-600 dark:text-gray-300 text-sm"><strong>Instructions:</strong> ${meal.strInstructions}</p>
-      <p class="text-gray-600 dark:text-gray-300 text-sm"><strong>Tags:</strong> ${meal.strTags || "None"}</p>
-      <p class="text-gray-600 dark:text-gray-300 text-sm"><strong>Food Ingredient:</strong> ${meal.strIngredient1 || "N/A"}</p>
+    <div class=>
+      <h2 class=>${meal.strMeal}</h2>
+      <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
+      <p class=>Food Category: ${meal.strCategory}</p>
+      <p class=>Food Country: ${meal.strArea}</p>
+      <p class=>Instructions: ${meal.strInstructions}</p>
+      <p class=>Tags: ${meal.strTags}</p>
+      <p class=Food Ingredient: ${meal.strIngredient1}</p>
     </div>
     `;
     mealsListContainer.insertAdjacentHTML("beforeend", mealHTML);

@@ -1,7 +1,8 @@
 import "./style.css";
 
+let allMeals = [];
+
 async function getMeals() {
-  const response = await fetch;
   const urls = [
     "https://www.themealdb.com/api/json/v1/1/search.php?f=a",
     "https://www.themealdb.com/api/json/v1/1/search.php?f=b",
@@ -31,36 +32,57 @@ async function getMeals() {
     "https://www.themealdb.com/api/json/v1/1/search.php?f=z",
   ];
 
-  const responses = await Promise.all(urls.map((url) => fetch(url)));
-  const mealsData = await Promise.all(
-    responses.map((response) => response.json())
-  );
+  for (let url of urls) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
 
-  const allMeals = mealsData.flatMap((data) => data.meals || []);
+      if (data.meals) {
+        allMeals = [...allMeals, ...data.meals];
+      }
+    } catch (error) {
+      console.error("Error fetching meals:", error);
+    }
+  }
 
   presentMeals(allMeals);
-  const data = await response.json();
-  presentMeals(data.meals);
+
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", handleFilterClick);
+  });
 }
 
-function presentMeals(data) {
+function presentMeals(meals) {
   const mealsListContainer = document.querySelector("#meal-cont");
   mealsListContainer.innerHTML = "";
 
-  data.forEach((meal) => {
+  meals.forEach((meal) => {
     const mealHTML = `
-    <div class=>
-      <h2 class=>${meal.strMeal}</h2>
-      <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
-      <p class=>Meal Category: ${meal.strCategory}</p>
-      <p class=>Meal Country: ${meal.strArea}</p>
-      <p class=>Instructions: ${meal.strInstructions}</p>
-      <p class=>Tags: ${meal.strTags}</p>
-      <p class=>Meal Ingredients: ${meal.strIngredient1}</p>
-    </div>
+      <div class="meal-card">
+        <h2>${meal.strMeal}</h2>
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
+        <p>Meal Category: ${meal.strCategory}</p>
+        <p>Meal Country: ${meal.strArea}</p>
+        <p>Instructions: ${meal.strInstructions}</p>
+        <p>Tags: ${meal.strTags}</p>
+        <p>Ingredients: ${meal.strIngredient1}</p>
+      </div>
     `;
     mealsListContainer.insertAdjacentHTML("beforeend", mealHTML);
   });
+}
+function handleFilterClick(event) {
+  const selectedCategory = event.target.getAttribute("data-category");
+
+  if (selectedCategory === "") {
+    presentMeals(allMeals);
+  } else {
+    const filteredMeals = allMeals.filter(
+      (meal) => meal.strCategory === selectedCategory
+    );
+    presentMeals(filteredMeals);
+  }
 }
 
 getMeals();

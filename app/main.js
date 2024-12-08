@@ -1,5 +1,4 @@
 import "./style.css";
-
 let allMeals = [];
 
 async function getMeals() {
@@ -59,14 +58,13 @@ function presentMeals(meals) {
 
   meals.forEach((meal) => {
     const mealHTML = `
-      <div class="meal-card">
-        <h2>${meal.strMeal}</h2>
-        <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
-        <p>Meal Category: ${meal.strCategory}</p>
-        <p>Meal Country: ${meal.strArea}</p>
-        <p>Instructions: ${meal.strInstructions}</p>
-        <p>Tags: ${meal.strTags}</p>
-        <p>Ingredients: ${meal.strIngredient1}</p>
+      <div id="meal-card" class="border-4 border-solid border-secondary p-4">
+        <h2 class="text-2xl text-secondary font-semibold flex items-center justify-center box-border mb-4 mt-2">${meal.strMeal}</h2>
+        <img class="border-solid border-4 border-tertiary mb-2" src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
+        <p class="text-text mb-2"><span class="font-bold">Category:</span> ${meal.strCategory}</p>
+        <p class="text-text mb-2"><span class="font-bold">Country of Origin:</span> ${meal.strArea}</p>
+        <p class="text-text mb-2"><span class="font-bold">Instructions:</span> ${meal.strInstructions}</p>
+        <p class="text-text mb-2 break-words"><span class="font-bold">Recipe Link:</span> ${meal.strSource}</p>
       </div>
     `;
     mealsListContainer.insertAdjacentHTML("beforeend", mealHTML);
